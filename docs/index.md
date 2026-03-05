@@ -58,15 +58,13 @@ import sys
 Requires **Python 3.11+**.
 
 ```bash
-pip install dumpcat
+uv tool install dumpcat
 ```
 
-Or install from source:
+Or with pip:
 
 ```bash
-git clone https://github.com/Allenfp/dumpcat.git
-cd dumpcat
-pip install .
+pip install dumpcat
 ```
 
 ---

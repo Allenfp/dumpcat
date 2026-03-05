@@ -2,13 +2,19 @@
 
 ## Installation
 
+=== "uv (recommended)"
+
+    ```bash
+    uv tool install dumpcat
+    ```
+
 === "pip"
 
     ```bash
     pip install dumpcat
     ```
 
-=== "pipx (isolated)"
+=== "pipx"
 
     ```bash
     pipx install dumpcat

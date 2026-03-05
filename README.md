@@ -21,19 +21,17 @@ Dump a directory's file tree and contents into a single formatted output — bui
 Requires **Python 3.11+**.
 
 ```bash
+uv tool install dumpcat
+```
+
+```bash
+# Or with pip
 pip install dumpcat
 ```
 
 ```bash
+# Or with pipx
 pipx install dumpcat
-```
-
-Or install from source:
-
-```bash
-git clone https://github.com/Allenfp/dumpcat.git
-cd dumpcat
-pip install .
 ```
 
 ## Quick start
