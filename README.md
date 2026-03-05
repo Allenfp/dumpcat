@@ -8,6 +8,7 @@ Dump a directory's file tree and contents into a single formatted output — bui
 <p align="center">
   <img src="assets/dumpcat.png" alt="dumpcat" width="300">
 </p>
+
 ## Highlights
 
 - **One command** to dump your entire codebase (or a filtered slice of it) into a single output
