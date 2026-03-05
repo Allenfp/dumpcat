@@ -1,14 +1,13 @@
 # dumpcat
 
-<p align="center">
-  <img src="assets/dumpcat.png" alt="dumpcat" width="300">
-</p>
-
 [![PyPI](https://img.shields.io/pypi/v/dumpcat.svg)](https://pypi.python.org/pypi/dumpcat)
 [![License](https://img.shields.io/pypi/l/dumpcat.svg)](https://pypi.python.org/pypi/dumpcat)
 
 Dump a directory's file tree and contents into a single formatted output — built for LLM prompts.
 
+<p align="center">
+  <img src="assets/dumpcat.png" alt="dumpcat" width="300">
+</p>
 ## Highlights
 
 - **One command** to dump your entire codebase (or a filtered slice of it) into a single output
