@@ -1,6 +1,6 @@
 [project]
 name = "dumpcat"
-version = "0.1.1"
+version = "0.1.2"
 description = "Dump a directory's file tree and contents into a single formatted output — built for LLM prompts."
 requires-python = ">=3.11"
 license = "MIT"
