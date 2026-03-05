@@ -1,5 +1,9 @@
 # dumpcat
 
+<p align="center">
+  <img src="assets/dumpcat.png" alt="dumpcat" width="300">
+</p>
+
 [![PyPI](https://img.shields.io/pypi/v/dumpcat.svg)](https://pypi.python.org/pypi/dumpcat)
 [![License](https://img.shields.io/pypi/l/dumpcat.svg)](https://pypi.python.org/pypi/dumpcat)
 
