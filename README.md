@@ -1,16 +1,20 @@
 # dumpcat
 
-A CLI tool that dumps a directory's file tree and contents into a single formatted output. Built for preparing codebase context for LLM prompts.
+[![PyPI](https://img.shields.io/pypi/v/dumpcat.svg)](https://pypi.python.org/pypi/dumpcat)
+[![License](https://img.shields.io/pypi/l/dumpcat.svg)](https://pypi.python.org/pypi/dumpcat)
 
-## Features
+Dump a directory's file tree and contents into a single formatted output — built for LLM prompts.
 
-- Renders directory tree and file contents in **Markdown**, **Plain text**, or **JSON**
-- Respects `.gitignore` by default
-- Configurable include/exclude filters, depth limits, and file size limits
-- Copy output directly to clipboard
-- Prepend/append custom text or file contents (great for prompt templates)
-- Project-level config via `.dumpcat.toml` with named profiles
-- Line numbers, stats (file count, lines, estimated tokens), and more
+## Highlights
+
+- **One command** to dump your entire codebase (or a filtered slice of it) into a single output
+- **Smart defaults** — respects `.gitignore`, skips binaries, limits file sizes
+- **Three output formats** — Markdown, plain text, or JSON
+- **Filterable** — by extension, glob pattern, depth, and file size
+- **Clipboard ready** — copy output directly with `-c`
+- **Prompt-friendly** — prepend/append text or template files for LLM context
+- **Configurable** — project-level `.dumpcat.toml` with named profiles
+- **Zero bloat** — one runtime dependency (`pathspec`), everything else is stdlib
 
 ## Installation
 
@@ -20,195 +24,125 @@ Requires **Python 3.11+**.
 pip install dumpcat
 ```
 
+```bash
+pipx install dumpcat
+```
+
 Or install from source:
 
 ```bash
-git clone https://github.com/your-username/dumpcat.git
+git clone https://github.com/Allenfp/dumpcat.git
 cd dumpcat
 pip install .
 ```
 
-## Quick Start
+## Quick start
 
 ```bash
-# Dump current directory to stdout (Markdown format)
+# Dump current directory as Markdown
 dumpcat
-
-# Dump a specific directory
-dumpcat src/
-
-# Write output to a file
-dumpcat -o dump.md
-
-# Copy output to clipboard
-dumpcat -c
 
 # Only Python files, 2 levels deep
 dumpcat -d 2 -i .py
 
-# Plain text format with stats
+# Prepend a prompt and copy to clipboard
+dumpcat -i .py -c -p "Review this code for security issues"
+
+# Plain text with stats
 dumpcat -f plain -s
 
-# Prepend a prompt for an LLM
-dumpcat -p "Review this code for bugs"
-
-# Prepend from a file
-dumpcat -p @prompts/review.md
-
-# Show only the tree structure
+# Just the tree structure
 dumpcat --tree-only
 
-# JSON output, no tree
-dumpcat --no-tree -f json
+# JSON output for tooling
+dumpcat -f json --no-tree
 ```
 
-## CLI Reference
+## Output
 
-```
-dumpcat [OPTIONS] [PATH]
-```
-
-`PATH` defaults to `.` (current directory).
-
-### Examples
-
-**Dump only Python files to clipboard with a review prompt:**
-
-```bash
-dumpcat -i .py -c -p "Review this code for security issues"
-```
-
-**Export a shallow overview of a project in plain text:**
-
-```bash
-dumpcat -d 2 --tree-only -f plain -o overview.txt src/
-```
-
-**Generate JSON output with stats and line numbers, excluding tests:**
-
-```bash
-dumpcat -f json -s -n -e tests -e "*.pyc" -o codebase.json
-```
-
-### Flags
-
-| Flag | Short | Description |
-|------|-------|-------------|
-| `--output PATH` | `-o` | Write output to a file instead of stdout |
-| `--clipboard` | `-c` | Copy output to clipboard |
-| `--depth INT` | `-d` | Max directory depth |
-| `--include EXT` | `-i` | Include only these extensions (repeatable: `-i .py -i .js`) |
-| `--exclude PATTERN` | `-e` | Exclude glob patterns (repeatable: `-e node_modules -e "*.pyc"`) |
-| `--gitignore / --no-gitignore` | | Respect `.gitignore` rules (default: on) |
-| `--tree-only` | | Only show tree, no file contents |
-| `--no-tree` | | Only show file contents, no tree |
-| `--prepend TEXT` | `-p` | Text or `@filepath` to prepend to output |
-| `--append TEXT` | `-a` | Text or `@filepath` to append to output |
-| `--max-size SIZE` | | Skip files larger than this (default: `1mb`) |
-| `--stats` | `-s` | Show file count, lines, and estimated tokens |
-| `--format FORMAT` | `-f` | Output format: `markdown`, `plain`, or `json` (default: `markdown`) |
-| `--config PATH` | | Path to config file |
-| `--profile NAME` | | Named profile from config (default: `default`) |
-| `--follow-symlinks` | | Follow symbolic links |
-| `--hidden` | | Include dotfiles and dotdirs |
-| `--line-numbers` | `-n` | Add line numbers to file contents |
-| `--version` | `-V` | Show version |
-
-## Output Formats
-
-### Markdown (default)
+dumpcat renders file contents followed by a file tree:
 
 ````
-# File Tree
-
-```
-src/
-  main.py
-  utils/
-    helpers.py
-```
-
 # File Contents
 
 ## `src/main.py`
 
 ```python
 import sys
-...
+
+def main():
+    print("hello")
+```
+
+# File Tree
+
+```
+.
+├── src/
+│   ├── main.py
+│   └── utils/
+│       └── helpers.py
+└── README.md
 ```
 ````
 
-### Plain
+See the [output formats documentation](https://allenfp.github.io/dumpcat/output-formats/) for Markdown, plain text, and JSON examples.
+
+## CLI reference
 
 ```
-=== TREE ===
-
-src/
-  main.py
-  utils/
-    helpers.py
-
-=== src/main.py ===
-
-import sys
-...
+dumpcat [OPTIONS] [PATH]
 ```
 
-### JSON
+| Flag | Short | Description |
+|---|---|---|
+| `--output PATH` | `-o` | Write output to a file |
+| `--clipboard` | `-c` | Copy output to clipboard |
+| `--depth INT` | `-d` | Max directory depth |
+| `--include EXT` | `-i` | Include only these extensions (repeatable) |
+| `--exclude PATTERN` | `-e` | Exclude glob patterns (repeatable) |
+| `--gitignore / --no-gitignore` | | Respect `.gitignore` rules (default: on) |
+| `--tree-only` | | Show only the tree, no file contents |
+| `--no-tree` | | Show only file contents, no tree |
+| `--prepend TEXT` | `-p` | Text or `@filepath` to prepend |
+| `--append TEXT` | `-a` | Text or `@filepath` to append |
+| `--max-size SIZE` | | Skip files larger than this (default: `1mb`) |
+| `--stats` | `-s` | Show file count, lines, and estimated tokens |
+| `--format FORMAT` | `-f` | `markdown`, `plain`, or `json` (default: `markdown`) |
+| `--config PATH` | | Path to config file |
+| `--profile NAME` | | Named profile from config |
+| `--follow-symlinks` | | Follow symbolic links |
+| `--hidden` | | Include dotfiles and dotdirs |
+| `--line-numbers` | `-n` | Add line numbers to file contents |
 
-```json
-{
-  "tree": ["src/main.py", "src/utils/helpers.py"],
-  "files": {
-    "src/main.py": {
-      "content": "import sys\n...",
-      "lines": 42,
-      "size": 1024
-    }
-  },
-  "stats": { "files": 2, "lines": 84, "est_tokens": 1200 }
-}
-```
+See the [full CLI reference](https://allenfp.github.io/dumpcat/cli-reference/) for details.
 
 ## Configuration
 
-Create a `.dumpcat.toml` in your project root (or `~/.config/dumpcat/config.toml` for global defaults). The config file is auto-discovered by walking up from the target directory.
+Create a `.dumpcat.toml` in your project root:
 
 ```toml
 [default]
-format = "markdown"
-gitignore = true
-max_size = "1mb"
-hidden = false
-exclude = ["__pycache__", ".git", "*.pyc", "*.lock"]
+exclude = ["__pycache__", "*.pyc", ".venv"]
 
 [profiles.python]
-include = [".py", ".pyi", ".toml", ".cfg", ".txt", ".md"]
-exclude = ["__pycache__", ".git", "*.pyc", ".venv", ".mypy_cache"]
+include = [".py", ".pyi", ".toml", ".md"]
+exclude = ["__pycache__", "*.pyc", ".venv", ".mypy_cache"]
 
 [profiles.web]
-include = [".js", ".ts", ".jsx", ".tsx", ".css", ".html", ".json"]
-exclude = ["node_modules", "dist", "build", ".next"]
+include = [".js", ".ts", ".tsx", ".css", ".html"]
+exclude = ["node_modules", "dist", ".next"]
 ```
-
-Use profiles with:
 
 ```bash
 dumpcat --profile python
 ```
 
-**Precedence:** defaults < config `[default]` < config `[profiles.X]` < CLI flags.
+See the [configuration documentation](https://allenfp.github.io/dumpcat/configuration/) for details.
 
-## Development
+## Documentation
 
-```bash
-git clone https://github.com/your-username/dumpcat.git
-cd dumpcat
-python -m venv .venv
-source .venv/bin/activate
-pip install -e ".[dev]"
-pytest
-```
+Full documentation is available at [allenfp.github.io/dumpcat](https://allenfp.github.io/dumpcat/).
 
 ## License
 
