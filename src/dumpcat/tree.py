@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from pathlib import Path
-
 
 def prune_empty_dirs(entries: list[dict]) -> list[dict]:
     """Remove directories that contain no files (recursively)."""

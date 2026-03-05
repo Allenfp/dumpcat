@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from dumpcat.filters import is_binary, parse_size, should_include, load_gitignore_spec, should_include_dir
 
 

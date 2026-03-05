@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from dumpcat.config import find_config, load_config, merge_config
 
 

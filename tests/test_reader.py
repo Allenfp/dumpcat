@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from dumpcat.reader import read_file
 
 
