@@ -1,0 +1,52 @@
+[project]
+name = "dumpcat"
+version = "0.1.0"
+description = "Dump a directory's file tree and contents into a single formatted output — built for LLM prompts."
+requires-python = ">=3.11"
+license = "MIT"
+readme = "README.md"
+authors = [
+    { name = "Allen Partlow" },
+]
+keywords = ["cli", "directory", "tree", "dump", "llm", "prompt", "codebase", "context"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Utilities",
+    "Typing :: Typed",
+]
+dependencies = ["pathspec>=0.11"]
+
+[project.urls]
+Homepage = "https://github.com/Allenfp/dumpcat"
+Documentation = "https://allenfp.github.io/dumpcat/"
+Repository = "https://github.com/Allenfp/dumpcat"
+Issues = "https://github.com/Allenfp/dumpcat/issues"
+Changelog = "https://github.com/Allenfp/dumpcat/blob/main/CHANGELOG.md"
+
+[project.scripts]
+dumpcat = "dumpcat.cli:main"
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-cov", "ruff", "build"]
+docs = ["mkdocs-material", "mkdocs-minify-plugin"]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py311"
