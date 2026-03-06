@@ -15,7 +15,6 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("-V", "--version", action="version", version=f"%(prog)s {__version__}")
 
     parser.add_argument("-o", "--output", type=str, default=None, help="Output file path")
-    parser.add_argument("-c", "--clipboard", action="store_true", help="Copy output to clipboard")
     parser.add_argument("-d", "--depth", type=int, default=None, help="Max directory depth")
     parser.add_argument(
         "-i", "--include", action="append", default=None,

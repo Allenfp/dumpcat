@@ -14,7 +14,6 @@ When working with LLMs, you often need to share your codebase as context. Manual
 - **Smart defaults** — respects `.gitignore`, skips binaries, limits file sizes
 - **Multiple formats** — Markdown, plain text, or JSON
 - **Configurable** — filter by extension, depth, glob patterns, or named profiles
-- **Clipboard ready** — copy output directly with `-c`
 
 ## Quick example
 
@@ -25,8 +24,8 @@ dumpcat
 # Only Python files, 2 levels deep, with stats
 dumpcat -d 2 -i .py -s
 
-# Prepend a prompt and copy to clipboard
-dumpcat -i .py -c -p "Review this code for security issues"
+# Prepend a prompt
+dumpcat -i .py -p "Review this code for security issues"
 ```
 
 Output:

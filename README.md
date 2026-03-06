@@ -15,7 +15,6 @@ Dump a directory's file tree and contents into a single formatted output — bui
 - **Smart defaults** — respects `.gitignore`, skips binaries, limits file sizes
 - **Three output formats** — Markdown, plain text, or JSON
 - **Filterable** — by extension, glob pattern, depth, and file size
-- **Clipboard ready** — copy output directly with `-c`
 - **Prompt-friendly** — prepend/append text or template files for LLM context
 - **Configurable** — project-level `.dumpcat.toml` with named profiles
 - **Zero bloat** — one runtime dependency (`pathspec`), everything else is stdlib
@@ -47,8 +46,8 @@ dumpcat
 # Only Python files, 2 levels deep
 dumpcat -d 2 -i .py
 
-# Prepend a prompt and copy to clipboard
-dumpcat -i .py -c -p "Review this code for security issues"
+# Prepend a prompt
+dumpcat -i .py -p "Review this code for security issues"
 
 # Plain text with stats
 dumpcat -f plain -s
@@ -99,7 +98,6 @@ dumpcat [OPTIONS] [PATH]
 | Flag | Short | Description |
 |---|---|---|
 | `--output PATH` | `-o` | Write output to a file |
-| `--clipboard` | `-c` | Copy output to clipboard |
 | `--depth INT` | `-d` | Max directory depth |
 | `--include EXT` | `-i` | Include only these extensions (repeatable) |
 | `--exclude PATTERN` | `-e` | Exclude glob patterns (repeatable) |

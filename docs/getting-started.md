@@ -70,12 +70,6 @@ Write to a file instead of stdout:
 dumpcat -o dump.md
 ```
 
-Copy to clipboard:
-
-```bash
-dumpcat -c
-```
-
 Switch output format:
 
 ```bash

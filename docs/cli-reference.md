@@ -11,7 +11,6 @@ dumpcat [OPTIONS] [PATH]
 | Flag | Short | Type | Default | Description |
 |---|---|---|---|---|
 | `--output PATH` | `-o` | string | stdout | Write output to a file |
-| `--clipboard` | `-c` | flag | off | Copy output to clipboard |
 | `--depth INT` | `-d` | integer | unlimited | Max directory depth |
 | `--include EXT` | `-i` | string (repeatable) | all files | Include only these extensions |
 | `--exclude PATTERN` | `-e` | string (repeatable) | none | Exclude glob patterns |

@@ -3,7 +3,6 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-from .clipboard import copy_to_clipboard, warn_large_clipboard
 from .config import find_config, load_config, merge_config
 from .filters import (
     load_gitignore_spec,
@@ -204,15 +203,8 @@ def run(args) -> None:
             line_numbers=args.line_numbers,
         )
 
-    if args.clipboard:
-        warn_large_clipboard(len(output.encode("utf-8")))
-        if copy_to_clipboard(output):
-            print("Output copied to clipboard", file=sys.stderr)
-        else:
-            print("Warning: could not copy to clipboard", file=sys.stderr)
-
     if args.output:
         Path(args.output).write_text(output, encoding="utf-8")
         print(f"Output written to {args.output}", file=sys.stderr)
-    elif not args.clipboard:
+    else:
         print(output)

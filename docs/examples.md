@@ -4,10 +4,10 @@ Real-world usage patterns for dumpcat.
 
 ## LLM code review
 
-Dump your Python source with a review prompt and copy to clipboard:
+Dump your Python source with a review prompt:
 
 ```bash
-dumpcat src/ -i .py -c -p "Review this code for bugs, security issues, and performance problems. Suggest concrete fixes."
+dumpcat src/ -i .py -p "Review this code for bugs, security issues, and performance problems. Suggest concrete fixes."
 ```
 
 ## Project overview for onboarding
@@ -78,7 +78,7 @@ Be specific and reference file paths and line numbers." > prompts/review.md
 Then use it:
 
 ```bash
-dumpcat src/ -i .py -p @prompts/review.md -c
+dumpcat src/ -i .py -p @prompts/review.md
 ```
 
 ## Full project dump with stats
