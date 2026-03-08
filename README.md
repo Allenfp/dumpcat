@@ -34,8 +34,10 @@ pip install dumpcat
 ```
 
 ```bash
-# Or with pipx
-pipx install dumpcat
+# Or from source
+git clone https://github.com/Allenfp/dumpcat.git
+cd dumpcat
+pip install .
 ```
 
 ## Quick start
