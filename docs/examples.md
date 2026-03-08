@@ -136,6 +136,38 @@ dumpcat --tree-only
 └── README.md
 ```
 
+## Send code to a local LLM for review
+
+```bash
+dumpcat src/ -i .py --llm ollama -m llama3 -p "Review this code for bugs and suggest fixes"
+```
+
+## Use a configured LLM target
+
+After running `dumpcat init` and editing `~/.dumpcat/dumpcat_profiles.toml`:
+
+```bash
+# Use the default target
+dumpcat src/ -i .py --llm -p "Explain this codebase"
+
+# Use a named target
+dumpcat src/ --llm -t openai -p "Write unit tests for this code"
+```
+
+## Save LLM response to a file
+
+```bash
+dumpcat src/ -i .py --llm ollama -m llama3 -p "Review this code" -o review.md
+```
+
+## Accumulate multiple dumps into one file
+
+```bash
+dumpcat src/ -i .py -o full-dump.md
+dumpcat tests/ -i .py -o full-dump.md -A
+dumpcat docs/ -i .md -o full-dump.md -A
+```
+
 ## Hidden files and symlinks
 
 ```bash

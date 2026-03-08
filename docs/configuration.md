@@ -97,3 +97,69 @@ dumpcat --profile backend -d 3
 ```
 
 Commit the `.dumpcat.toml` to your repo so your team shares the same profiles.
+
+## LLM configuration
+
+LLM targets are configured in a separate file: `~/.dumpcat/dumpcat_profiles.toml`. Run `dumpcat init` to create a starter config.
+
+### Config file format
+
+```toml
+[llm]
+default_target = "ollama"
+
+[llm.targets.ollama]
+provider = "ollama"
+model = "llama3"
+system_prompt = "You are a helpful coding assistant."
+temperature = 0.7
+max_tokens = 4096
+
+[llm.targets.openai]
+url = "https://api.openai.com/v1/chat/completions"
+model = "gpt-4o"
+api_key_env = "OPENAI_API_KEY"
+temperature = 0.7
+```
+
+### Target keys
+
+| Key | Type | Description |
+|---|---|---|
+| `provider` | string | Built-in provider: `ollama`, `vllm`, or `lmstudio` |
+| `url` | string | Full endpoint URL (overrides `provider`) |
+| `model` | string | Model name |
+| `system_prompt` | string | Default system prompt |
+| `api_key_env` | string | Environment variable containing the API key |
+| `temperature` | float | Sampling temperature |
+| `top_p` | float | Top-p sampling |
+| `max_tokens` | integer | Maximum response tokens |
+| `n` | integer | Number of completions |
+| `seed` | integer | Random seed |
+| `top_k` | integer | Top-k sampling |
+| `frequency_penalty` | float | Frequency penalty |
+| `presence_penalty` | float | Presence penalty |
+
+### Usage
+
+```bash
+# Use the default target
+dumpcat --llm -p "Review this code"
+
+# Use a named target
+dumpcat --llm -t openai -p "Review this code"
+
+# Override model from a target
+dumpcat --llm -t ollama -m mistral
+
+# CLI flags override target config
+dumpcat --llm -t openai --set temperature=0 --system-prompt "Be brief"
+```
+
+### Precedence
+
+LLM settings are resolved in this order (later wins):
+
+```
+target config < CLI flags (--model, --system-prompt, --set, --api-key)
+```

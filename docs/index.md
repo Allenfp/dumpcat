@@ -13,6 +13,7 @@ When working with LLMs, you often need to share your codebase as context. Manual
 - **One command** to dump your entire project (or a filtered slice of it)
 - **Smart defaults** — respects `.gitignore`, skips binaries, limits file sizes
 - **Multiple formats** — Markdown, plain text, or JSON
+- **Built-in LLM support** — pipe output to Ollama, vLLM, LM Studio, or any OpenAI-compatible endpoint
 - **Configurable** — filter by extension, depth, glob patterns, or named profiles
 
 ## Quick example

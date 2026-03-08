@@ -17,6 +17,7 @@ Dump a directory's file tree and contents into a single formatted output — bui
 - **Filterable** — by extension, glob pattern, depth, and file size
 - **Prompt-friendly** — prepend/append text or template files for LLM context
 - **Configurable** — project-level `.dumpcat.toml` with named profiles
+- **Built-in LLM support** — pipe output to Ollama, vLLM, LM Studio, or any OpenAI-compatible endpoint
 - **Zero bloat** — one runtime dependency (`pathspec`), everything else is stdlib
 
 ## Installation
@@ -57,6 +58,12 @@ dumpcat --tree-only
 
 # JSON output for tooling
 dumpcat -f json --no-tree
+
+# Send to a local LLM
+dumpcat -i .py --llm ollama -m llama3 -p "Review this code"
+
+# Set up LLM profiles
+dumpcat init
 ```
 
 ## Output
@@ -98,6 +105,7 @@ dumpcat [OPTIONS] [PATH]
 | Flag | Short | Description |
 |---|---|---|
 | `--output PATH` | `-o` | Write output to a file |
+| `--output-append` | `-A` | Append to output file instead of overwriting |
 | `--depth INT` | `-d` | Max directory depth |
 | `--include EXT` | `-i` | Include only these extensions (repeatable) |
 | `--exclude PATTERN` | `-e` | Exclude glob patterns (repeatable) |
@@ -114,6 +122,12 @@ dumpcat [OPTIONS] [PATH]
 | `--follow-symlinks` | | Follow symbolic links |
 | `--hidden` | | Include dotfiles and dotdirs |
 | `--line-numbers` | `-n` | Add line numbers to file contents |
+| `--llm PROVIDER` | | Send output to an LLM (`ollama`, `vllm`, `lmstudio`, or a URL) |
+| `--target NAME` | `-t` | Named LLM target from config |
+| `--model NAME` | `-m` | LLM model name |
+| `--system-prompt TEXT` | | System prompt for the LLM |
+| `--set KEY=VALUE` | | LLM parameter (repeatable) |
+| `--api-key KEY` | | API key for the endpoint |
 
 See the [full CLI reference](https://allenfp.github.io/dumpcat/cli-reference/) for details.
 

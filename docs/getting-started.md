@@ -102,6 +102,33 @@ Get a summary of file count, lines, and estimated tokens:
 dumpcat -s
 ```
 
+## Sending output to a local LLM
+
+dumpcat can send your dump directly to a local LLM (Ollama, vLLM, LM Studio) or any OpenAI-compatible endpoint:
+
+```bash
+dumpcat src/ -i .py --llm ollama -m llama3 -p "Review this code for bugs"
+```
+
+Set up reusable LLM targets:
+
+```bash
+# Create a starter config
+dumpcat init
+
+# Edit ~/.dumpcat/dumpcat_profiles.toml, then:
+dumpcat src/ --llm -p "Explain this codebase"
+```
+
+## Appending to output files
+
+Use `-A` to append to an existing file instead of overwriting:
+
+```bash
+dumpcat src/ -o dump.md
+dumpcat tests/ -o dump.md -A
+```
+
 ## What's next?
 
 - See the full [CLI Reference](cli-reference.md) for every flag
