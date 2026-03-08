@@ -222,7 +222,7 @@ def test_send_request_success(monkeypatch):
         "params": {},
     }
     result = send_request(target, "hello")
-    assert result == "Here is my review."
+    assert result == {"content": "Here is my review.", "usage": {}}
 
 
 def test_send_request_bad_json_response(monkeypatch):
@@ -399,4 +399,6 @@ def test_verbose_not_shown_by_default(monkeypatch, capsys):
     )
     handle_llm(args, "hello")
     captured = capsys.readouterr()
-    assert "[llm]" not in captured.err
+    # Status/spinner lines are always shown; verbose controls detailed debug output
+    assert "[llm] URL:" not in captured.err
+    assert "[llm] Model:" not in captured.err
