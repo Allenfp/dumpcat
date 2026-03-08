@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import sys
 
 from . import __version__
 from .core import run
@@ -15,6 +16,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("-V", "--version", action="version", version=f"%(prog)s {__version__}")
 
     parser.add_argument("-o", "--output", type=str, default=None, help="Output file path")
+    parser.add_argument("-A", "--output-append", action="store_true", help="Append to output file instead of overwriting")
     parser.add_argument("-d", "--depth", type=int, default=None, help="Max directory depth")
     parser.add_argument(
         "-i", "--include", action="append", default=None,
@@ -58,10 +60,45 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--hidden", action="store_true", help="Include dotfiles/dotdirs")
     parser.add_argument("-n", "--line-numbers", action="store_true", help="Add line numbers to content")
 
+    parser.add_argument("-v", "--verbose", action="store_true", help="Print verbose logs to stderr")
+
+    llm_group = parser.add_argument_group("LLM options")
+    llm_group.add_argument(
+        "--llm", nargs="?", const=True, default=None, metavar="PROVIDER_OR_URL",
+        help="Send output to an LLM. Value: ollama, vllm, lmstudio, a URL, or omit for default target",
+    )
+    llm_group.add_argument(
+        "-t", "--target", type=str, default=None, metavar="NAME",
+        help="Named LLM target from config [llm.targets.*]",
+    )
+    llm_group.add_argument(
+        "-m", "--model", type=str, default=None, metavar="NAME",
+        help="LLM model name (e.g. llama3, gpt-4o)",
+    )
+    llm_group.add_argument(
+        "--system-prompt", type=str, default=None, metavar="TEXT",
+        help="System prompt for the LLM",
+    )
+    llm_group.add_argument(
+        "--set", action="append", default=None, metavar="KEY=VALUE",
+        help="LLM parameter (repeatable): --set temperature=0.7 --set max_tokens=4096",
+    )
+    llm_group.add_argument(
+        "--api-key", type=str, default=None, metavar="KEY",
+        help="API key for the endpoint",
+    )
+
     return parser
 
 
 def main(argv: list[str] | None = None) -> None:
+    # Handle init subcommand before argparse
+    raw = argv if argv is not None else sys.argv[1:]
+    if raw and raw[0] == "init":
+        from .init import run_init
+        run_init(raw[1:])
+        return
+
     parser = build_parser()
     args = parser.parse_args(argv)
 

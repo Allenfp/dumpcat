@@ -111,6 +111,7 @@ def run(args) -> None:
         sys.exit(1)
 
     output_path = Path(args.output).resolve() if args.output else None
+    output_append = getattr(args, "output_append", False)
 
     config_path = find_config(root, args.config)
     config = load_config(config_path, args.profile)
@@ -203,8 +204,30 @@ def run(args) -> None:
             line_numbers=args.line_numbers,
         )
 
-    if args.output:
-        Path(args.output).write_text(output, encoding="utf-8")
-        print(f"Output written to {args.output}", file=sys.stderr)
+    llm_active = getattr(args, "llm", None) is not None or getattr(args, "target", None) is not None
+
+    if llm_active:
+        from .llm import LLMError, handle_llm
+
+        try:
+            response = handle_llm(args, output)
+        except LLMError as e:
+            print(f"Error: {e}", file=sys.stderr)
+            sys.exit(1)
+
+        if args.output:
+            mode = "a" if output_append else "w"
+            with open(args.output, mode, encoding="utf-8") as f:
+                f.write(response)
+            verb = "appended to" if output_append else "written to"
+            print(f"Response {verb} {args.output}", file=sys.stderr)
+        else:
+            print(response)
+    elif args.output:
+        mode = "a" if output_append else "w"
+        with open(args.output, mode, encoding="utf-8") as f:
+            f.write(output)
+        verb = "appended to" if output_append else "written to"
+        print(f"Output {verb} {args.output}", file=sys.stderr)
     else:
         print(output)

@@ -54,6 +54,20 @@ def load_config(
     return result
 
 
+def load_llm_config() -> dict:
+    config_path = Path.home() / ".dumpcat" / "dumpcat_profiles.toml"
+    if not config_path.is_file():
+        return {}
+
+    try:
+        with open(config_path, "rb") as f:
+            data = tomllib.load(f)
+    except (OSError, tomllib.TOMLDecodeError):
+        return {}
+
+    return data.get("llm", {})
+
+
 def merge_config(config: dict, cli_args: dict) -> dict:
     merged = dict(config)
     for key, value in cli_args.items():
