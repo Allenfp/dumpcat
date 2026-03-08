@@ -1,8 +1,6 @@
-import sys
-
 import pytest
 
-from dumpcat.init import CONFIG_FILE, TEMPLATE, run_init
+from dumpcat.init import TEMPLATE, run_init
 
 
 @pytest.fixture(autouse=True)
