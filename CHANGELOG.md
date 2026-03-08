@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] - 2026-03-08
+
+### Added
+
+- LLM support / OpenAI API compatible support
+
 ## [0.1.0] - 2026-03-05
 
 ### Added
