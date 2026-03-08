@@ -1,23 +1,25 @@
-# dumpcat
+# Dumpcat
 
 [![PyPI](https://img.shields.io/pypi/v/dumpcat.svg)](https://pypi.python.org/pypi/dumpcat)
 [![License](https://img.shields.io/pypi/l/dumpcat.svg)](https://pypi.python.org/pypi/dumpcat)
 
-Dump a directory's file tree and contents into a single formatted output — built for LLM prompts.
+A lightweight CLI for dumping directory contents and automating LLM workflows from the command line.
 
 <p align="center">
-  <img src="assets/dumpcat.png" alt="dumpcat" width="300">
+  <img src="assets/dumpcat.png" alt="Dumpcat" width="300">
 </p>
 
 ## Highlights
 
+Use it for simple things like printing files to your terminal, or for advanced cases like automating LLM-powered processes in bash scripts and cron jobs.
+
 - **One command** to dump your entire codebase (or a filtered slice of it) into a single output
+- **Built-in LLM support** — send output to any OpenAI-compatible API (Ollama, vLLM, LM Studio, OpenAI, etc.)
+- **Automation-ready** — prepend/append prompt templates, append to files, schedule with cron
 - **Smart defaults** — respects `.gitignore`, skips binaries, limits file sizes
-- **Three output formats** — Markdown, plain text, or JSON
 - **Filterable** — by extension, glob pattern, depth, and file size
-- **Prompt-friendly** — prepend/append text or template files for LLM context
-- **Configurable** — project-level `.dumpcat.toml` with named profiles
-- **Built-in LLM support** — pipe output to Ollama, vLLM, LM Studio, or any OpenAI-compatible endpoint
+- **Three output formats** — Markdown, plain text, or JSON
+- **Configurable** — project-level `.dumpcat.toml` with named profiles and LLM targets
 - **Zero bloat** — one runtime dependency (`pathspec`), everything else is stdlib
 
 ## Installation
@@ -70,7 +72,7 @@ dumpcat init
 
 ## Output
 
-dumpcat renders file contents followed by a file tree:
+Dumpcat renders file contents followed by a file tree:
 
 ````
 # File Contents
@@ -155,6 +157,61 @@ dumpcat --profile python
 ```
 
 See the [configuration documentation](https://allenfp.github.io/dumpcat/configuration/) for details.
+
+## Example workflows
+
+### 1. Dump Python files to terminal
+
+```bash
+dumpcat src/ -d 2 -i .py
+```
+
+```
+ ┌───────────┐       ┌─────────────┐       ┌───────────┐
+ │  src/     │       │             │       │  stdout   │
+ │  *.py     │ ────► │   dumpcat   │ ────► │           │
+ │  depth 2  │       │             │       │  tree +   │
+ └───────────┘       └─────────────┘       │  code     │
+                                           └───────────┘
+```
+
+### 2. Send to a local LLM for review
+
+```bash
+dumpcat src/ -d 2 -i .py --llm ollama -m qwen3-vl-8b -p "Review this code for bugs"
+```
+
+```
+ ┌───────────┐       ┌─────────────┐       ┌───────────┐       ┌───────────┐
+ │  src/     │       │             │       │  Ollama   │       │  stdout   │
+ │  *.py     │ ────► │   dumpcat   │ ────► │  qwen3   │ ────► │           │
+ │  depth 2  │       │             │       │  -vl-8b  │       │  review   │
+ └───────────┘       └─────────────┘       └───────────┘       └───────────┘
+```
+
+### 3. Scheduled LLM review appended to a CSV log
+
+```bash
+0 9 * * * dumpcat /path/to/project -d 2 -i .py -e "*.txt" -e "*.md" \
+  -p @prompts/csv-review.md -a @prompts/csv-footer.md \
+  --llm ollama -m qwen3-vl-8b --set temperature=0.5 \
+  -o /path/to/reviews.csv -A
+```
+
+```
+ ┌───────────┐   ┌──────────────┐   ┌─────────────┐   ┌───────────┐   ┌──────────────┐
+ │  cron     │   │ prompts/     │   │             │   │  Ollama   │   │ reviews.csv  │
+ │  daily    │──►│ -p csv-      │──►│   dumpcat   │──►│  qwen3   │──►│              │
+ │  9:00 AM  │   │    review.md │   │  -i .py     │   │  -vl-8b  │   │ (append -A)  │
+ └───────────┘   │ -a csv-      │   │  -e *.txt   │   │  temp=0.5│   └──────────────┘
+                 │    footer.md │   │  -e *.md    │   └───────────┘
+                 └──────────────┘   └─────────────┘        │
+                                                           │
+                                              each run appends a line:
+                                              2025-03-01,main.py,high,SQL injection ...
+                                              2025-03-02,helpers.py,low,unused import ...
+                                              2025-03-03,main.py,med,missing null check ...
+```
 
 ## Documentation
 

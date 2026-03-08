@@ -1,6 +1,6 @@
 # Examples
 
-Real-world usage patterns for dumpcat.
+Real-world usage patterns for Dumpcat.
 
 ## LLM code review
 

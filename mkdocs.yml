@@ -1,4 +1,4 @@
-site_name: dumpcat
+site_name: Dumpcat
 site_url: https://allenfp.github.io/dumpcat/
 site_description: Dump a directory's file tree and contents into a single formatted output — built for LLM prompts.
 site_author: Allen Partlow

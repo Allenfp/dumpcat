@@ -1,10 +1,10 @@
 # Configuration
 
-dumpcat supports project-level configuration via `.dumpcat.toml` files. This lets you define defaults and named profiles so you don't have to repeat flags.
+Dumpcat supports project-level configuration via `.dumpcat.toml` files. This lets you define defaults and named profiles so you don't have to repeat flags.
 
 ## Config file discovery
 
-dumpcat looks for configuration in this order:
+Dumpcat looks for configuration in this order:
 
 1. **Explicit path** — `--config path/to/config.toml`
 2. **Walk up** — `.dumpcat.toml` in the target directory, then each parent directory

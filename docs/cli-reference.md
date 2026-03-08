@@ -158,7 +158,7 @@ dumpcat -i .py --llm ollama -m llama3
 dumpcat --llm http://localhost:9000/v1/chat/completions -m my-model
 ```
 
-When `--llm` is used without a value, dumpcat looks for a `default_target` in the LLM config file (`~/.dumpcat/dumpcat_profiles.toml`). See [Configuration](configuration.md) for details.
+When `--llm` is used without a value, Dumpcat looks for a `default_target` in the LLM config file (`~/.dumpcat/dumpcat_profiles.toml`). See [Configuration](configuration.md) for details.
 
 The LLM response replaces the normal dump output on stdout. Use `-o` to write the response to a file instead.
 

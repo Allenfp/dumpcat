@@ -1,6 +1,6 @@
 # Output Formats
 
-dumpcat supports three output formats: **Markdown** (default), **Plain text**, and **JSON**.
+Dumpcat supports three output formats: **Markdown** (default), **Plain text**, and **JSON**.
 
 ## Markdown
 
@@ -36,7 +36,7 @@ File contents are wrapped in fenced code blocks with language detection based on
 
 ### Supported languages
 
-dumpcat auto-detects syntax highlighting for: Python, JavaScript, TypeScript, Rust, Go, Ruby, Java, Kotlin, C/C++, C#, Swift, Bash, HTML, CSS, SCSS, JSON, YAML, TOML, SQL, Markdown, Lua, R, PHP, Perl, Elixir, Erlang, Haskell, OCaml, HCL, Protobuf, GraphQL, Vue, Svelte, and more.
+Dumpcat auto-detects syntax highlighting for: Python, JavaScript, TypeScript, Rust, Go, Ruby, Java, Kotlin, C/C++, C#, Swift, Bash, HTML, CSS, SCSS, JSON, YAML, TOML, SQL, Markdown, Lua, R, PHP, Perl, Elixir, Erlang, Haskell, OCaml, HCL, Protobuf, GraphQL, Vue, Svelte, and more.
 
 ## Plain text
 

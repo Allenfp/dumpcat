@@ -104,7 +104,7 @@ dumpcat -s
 
 ## Sending output to a local LLM
 
-dumpcat can send your dump directly to a local LLM (Ollama, vLLM, LM Studio) or any OpenAI-compatible endpoint:
+Dumpcat can send your dump directly to a local LLM (Ollama, vLLM, LM Studio) or any OpenAI-compatible endpoint:
 
 ```bash
 dumpcat src/ -i .py --llm ollama -m llama3 -p "Review this code for bugs"

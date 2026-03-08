@@ -1,20 +1,19 @@
-# dumpcat
+# Dumpcat
 
-**Dump a directory's file tree and contents into a single formatted output — built for LLM prompts.**
+**A lightweight CLI for dumping directory contents and automating LLM workflows from the command line.**
 
 ---
 
-dumpcat scans a directory, builds a file tree, reads text file contents, and outputs everything in a clean format you can paste straight into ChatGPT, Claude, or any LLM.
+Use it for simple things like printing files to your terminal, or for advanced cases like automating LLM-powered processes in bash scripts and cron jobs. Dumpcat scans a directory, builds a file tree, reads text file contents, and outputs everything in a clean format — or sends it straight to any OpenAI-compatible API.
 
-## Why dumpcat?
-
-When working with LLMs, you often need to share your codebase as context. Manually copying files is tedious and error-prone. dumpcat automates this:
+## Why Dumpcat?
 
 - **One command** to dump your entire project (or a filtered slice of it)
+- **Built-in LLM support** — send output to any OpenAI-compatible API (Ollama, vLLM, LM Studio, OpenAI, etc.)
+- **Automation-ready** — prepend/append prompt templates, append to files, schedule with cron
 - **Smart defaults** — respects `.gitignore`, skips binaries, limits file sizes
 - **Multiple formats** — Markdown, plain text, or JSON
-- **Built-in LLM support** — pipe output to Ollama, vLLM, LM Studio, or any OpenAI-compatible endpoint
-- **Configurable** — filter by extension, depth, glob patterns, or named profiles
+- **Configurable** — filter by extension, depth, glob patterns, named profiles, and LLM targets
 
 ## Quick example
 
